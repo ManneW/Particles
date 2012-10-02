@@ -9,8 +9,8 @@ class Source {
     virtual void emitParticles()  = 0;
 
  public:
-    Integer posX;
-    Integer posY;
+    int posX;
+    int posY;
 };
 
 #endif // Source_h

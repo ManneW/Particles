@@ -8,11 +8,11 @@ class Effect {
 
  public:
 
-    virtual Force forceAt(Integer posX, Integer posY)  = 0;
+    virtual Force forceAt(int posX, int posY)  = 0;
 
  public:
-    Integer posX;
-    Integer posY;
+    int posX;
+    int posY;
 };
 
 #endif // Effect_h

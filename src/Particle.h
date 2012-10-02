@@ -7,17 +7,10 @@ class Particle {
 
 
  private:
-    Integer posX;
-    Integer posY;
-    Integer vX;
-    Integer vY;
-
- public:
-
-    /**
-     * @element-type World
-     */
-    World *myWorld;
+    int posX;
+    int posY;
+    int vX;
+    int vY;
 };
 
 #endif // Particle_h
