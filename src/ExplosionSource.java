@@ -2,7 +2,12 @@ public class ExplosionSource extends Source {
 
 	@Override
 	public void emitParticles() {
-		
+		//Do a burst of 10 particles
+		Particle p;
+		for (int i = 0; i < 10; i+=1) {
+			p = this.generateParticle();
+			World.instance().addParticle(p);
+		}
 	}
 	
 	
@@ -13,7 +18,10 @@ public class ExplosionSource extends Source {
 			f = this.randomizeForce();
 		}
 		
-		Particle p = new Particle(posX, posY, , );
+		Particle p = new Particle();
+		p.setPosX(this.posX);
+		p.setPosY(this.posY);
+		p.applyForce(f);
 		
 		return p;
 	}

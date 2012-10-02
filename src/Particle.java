@@ -7,6 +7,10 @@ public class Particle {
   	private int vX;
   	private int vY;
   	
+  	public Particle()
+  	{
+  		
+  	}
   	
   	public Particle(int posX, int posY, int vX, int vY)
 	{
@@ -41,9 +45,14 @@ public class Particle {
 		this.vY = vY;
 	}
 
-  	
-  	public void applyForce(Force f) {
-  		//TODO
+  	/**
+  	 * Re-computes the particles velocity according to the applied force 
+  	 * @param f
+  	 */
+  	public void applyForce(Force f)
+  	{
+  		this.vX += f.x;
+  		this.vY += f.y;
   	}
   	
 }
