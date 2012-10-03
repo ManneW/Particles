@@ -1,13 +1,22 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class ExplosionSource extends Source {
 
 	@Override
 	public void emitParticles() {
 		//Do a burst of 10 particles
 		Particle p;
-		for (int i = 0; i < 10; i+=1) {
+		for (int i = 0; i < ((int)(Math.random() * 25) + 25); i+=1) {
 			p = this.generateParticle();
 			World.instance().addParticle(p);
 		}
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.drawRect(posX-5, posY-5, 10, 10);
 	}
 	
 	

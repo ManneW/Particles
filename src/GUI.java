@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 public class GUI implements Runnable {
 
 	private JFrame frame;
-	private JPanel worldPanel;
+	private WorldPanel worldPanel;
 	
 
 	/**
@@ -43,9 +43,11 @@ public class GUI implements Runnable {
 		initialize();
 		
 		ExplosionSource es = new ExplosionSource();
-		es.posX = 100;
-		es.posY = 100;
+		es.posX = 300;
+		es.posY = 300;
 		es.emitParticles();
+		
+		World.instance().addSource(es);
 		
 		try {
 			this.frame.setVisible(true);
@@ -59,7 +61,7 @@ public class GUI implements Runnable {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 676, 387);
+		frame.setBounds(100, 100, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -84,7 +86,7 @@ public class GUI implements Runnable {
 		JButton btnRunSimulation = new JButton("Run simulation");
 		panel.add(btnRunSimulation);
 		
-		worldPanel = new JPanel();
+		worldPanel = new WorldPanel();
 		worldPanel.setBackground(Color.BLUE);
 		frame.getContentPane().add(worldPanel, BorderLayout.CENTER);
 	}
@@ -92,17 +94,27 @@ public class GUI implements Runnable {
 	@Override
 	public void run()
 	{
+		World.instance().paintWorld(this.getWorldPanel().getGraphics());
+		
 		while(true) {
+			this.getWorldPanel().getGraphics().clearRect(
+					this.worldPanel.getX(),
+					this.worldPanel.getY(),
+					this.worldPanel.getWidth(),
+					this.worldPanel.getHeight()
+			);
+			
 			World.instance().paintWorld(this.getWorldPanel().getGraphics());
+			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public JPanel getWorldPanel() {
+	public WorldPanel getWorldPanel() {
 		return worldPanel;
 	}
 }
