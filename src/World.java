@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.util.Vector;
 
 public class World {
@@ -23,6 +24,22 @@ public class World {
   public void addParticle(Particle p)
   {
 	  this.particles.add(p);
+  }
+  
+  public void recalculateParticle(Particle p)
+  {
+	  //Apply force
+	  
+	  //Move
+	  p.move();
+  }
+  
+  public void paintWorld(Graphics g)
+  {
+	  for (Particle particle : particles) {
+		  this.recalculateParticle(particle);
+		  particle.paint(g);
+	  }
   }
   
 }

@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Vector;
 
 public class Particle {
@@ -53,6 +55,18 @@ public class Particle {
   	{
   		this.vX += f.x;
   		this.vY += f.y;
+  	}
+  	
+  	public void paint(Graphics g)
+  	{
+  		g.setColor(Color.RED);
+  		g.drawOval(this.getPosX(), this.getPosY(), 10, 10);
+  	}
+  	
+  	public void move()
+  	{
+  		this.posX += this.vX;
+  		this.posY += this.vY;
   	}
   	
 }

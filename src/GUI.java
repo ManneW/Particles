@@ -12,15 +12,19 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 
-public class GUI {
+public class GUI implements Runnable {
 
 	private JFrame frame;
+	private JPanel worldPanel;
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new GUI());
+		
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					GUI window = new GUI();
@@ -29,7 +33,7 @@ public class GUI {
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
 	}
 
 	/**
@@ -37,6 +41,17 @@ public class GUI {
 	 */
 	public GUI() {
 		initialize();
+		
+		ExplosionSource es = new ExplosionSource();
+		es.posX = 100;
+		es.posY = 100;
+		es.emitParticles();
+		
+		try {
+			this.frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -69,8 +84,25 @@ public class GUI {
 		JButton btnRunSimulation = new JButton("Run simulation");
 		panel.add(btnRunSimulation);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.BLUE);
-		frame.getContentPane().add(panel_1, BorderLayout.CENTER);
+		worldPanel = new JPanel();
+		worldPanel.setBackground(Color.BLUE);
+		frame.getContentPane().add(worldPanel, BorderLayout.CENTER);
+	}
+
+	@Override
+	public void run()
+	{
+		while(true) {
+			World.instance().paintWorld(this.getWorldPanel().getGraphics());
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public JPanel getWorldPanel() {
+		return worldPanel;
 	}
 }
