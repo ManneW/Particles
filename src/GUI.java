@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 
-public class GUI implements Runnable {
+public class GUI implements Runnable, ActionListener {
 
 	private JFrame frame;
 	private JPanel worldPanel;
@@ -89,7 +89,6 @@ public class GUI implements Runnable {
 		frame.getContentPane().add(worldPanel, BorderLayout.CENTER);
 	}
 
-	@Override
 	public void run()
 	{
 		while(true) {
@@ -104,5 +103,10 @@ public class GUI implements Runnable {
 	
 	public JPanel getWorldPanel() {
 		return worldPanel;
+	}
+
+	public void actionPerformed(ActionEvent arg) {
+		//if(arg.getSource()==)
+		
 	}
 }
