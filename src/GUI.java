@@ -148,6 +148,11 @@ public class GUI implements ActionListener {
 			ge.posX = 100;
 			ge.posY = 100;
 			World.instance().addEffect(ge);
+			
+			WindEffect we = new WindEffect();
+			we.posX = this.worldPanel.getWidth()-100;
+			we.posY = this.worldPanel.getHeight()-100;
+			//World.instance().addEffect(we);
 		}
 		else if(arg.getSource()==btnRunSimulation){
 			if(!simulationRunning){

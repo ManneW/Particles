@@ -49,7 +49,7 @@ public class World extends Thread{
 	  //Apply force
 	  Force resultingForce = new Force();
 	  for (Effect effect : effects) {
-		  resultingForce.add(effect.forceAt(p.getPosX(), p.getPosY()));
+		  resultingForce.add(effect.forceAt(p.getRoundedPosX(), p.getRoundedPosY()));
 	  }
 	  
 	  p.applyForce(resultingForce);
@@ -66,7 +66,7 @@ public class World extends Thread{
 		  }
 	  }
 	  
-	  System.out.println("Particles: " + particles.size());
+	  //System.out.println("Particles: " + particles.size());
 	  
 	  Vector<Particle> exitedParticles = new Vector<Particle>();
 	  synchronized (particles) {
@@ -94,7 +94,7 @@ public class World extends Thread{
 		  }
 		  
 		  try {
-			Thread.sleep(10);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

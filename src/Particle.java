@@ -4,17 +4,17 @@ import java.util.Vector;
 
 public class Particle {
 
-	private int posX;
-  	private int posY;
-  	private int vX;
-  	private int vY;
+	private double posX;
+  	private double posY;
+  	private double vX;
+  	private double vY;
   	
   	public Particle()
   	{
   		
   	}
   	
-  	public Particle(int posX, int posY, int vX, int vY)
+  	public Particle(double posX, double posY, double vX, double vY)
 	{
 		this.posX = posX;
 		this.posY = posY;
@@ -22,28 +22,38 @@ public class Particle {
 		this.vY = vY;
 	}
 	
-	public int getPosX() {
+	public double getPosX() {
 		return posX;
 	}
-	public void setPosX(int posX) {
+	public void setPosX(double posX) {
 		this.posX = posX;
 	}
-	public int getPosY() {
+	public double getPosY() {
 		return posY;
 	}
-	public void setPosY(int posY) {
+	public void setPosY(double posY) {
 		this.posY = posY;
 	}
-	public int getvX() {
+	
+	public int getRoundedPosX() {
+		return (int)Math.round(this.getPosX());
+	}
+	
+	public int getRoundedPosY() {
+		return (int)Math.round(this.getPosY());
+	}
+	
+	
+	public double getvX() {
 		return vX;
 	}
-	public void setvX(int vX) {
+	public void setvX(double vX) {
 		this.vX = vX;
 	}
-	public int getvY() {
+	public double getvY() {
 		return vY;
 	}
-	public void setvY(int vY) {
+	public void setvY(double vY) {
 		this.vY = vY;
 	}
 
@@ -60,7 +70,7 @@ public class Particle {
   	public void paint(Graphics g)
   	{
   		g.setColor(Color.RED);
-  		g.drawOval(this.getPosX(), this.getPosY(), 10, 10);
+  		g.fillOval((int)Math.round(this.getPosX()), (int)Math.round(this.getPosY()), 10, 10);
   	}
   	
   	public void move()
