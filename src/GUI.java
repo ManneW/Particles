@@ -2,6 +2,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -12,15 +13,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 
-public class GUI implements Runnable {
+public class GUI implements ActionListener {
 
 	private JFrame frame;
-	private WorldPanel worldPanel;
+	private JPanel worldPanel;
+	private JButton btnAddEffect;
+	private JButton btnAddSource;
+	private JButton btnRunSimulation;
+	private boolean simulationRunning = false;
 	
 
 	/**
 	 * Launch the application.
 	 */
+	/*commented 2012-10-03 17:45
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new GUI());
 		
@@ -33,22 +39,15 @@ public class GUI implements Runnable {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 	}
-
+	*/
 	/**
 	 * Create the application.
 	 */
 	public GUI() {
 		initialize();
-		
-		ExplosionSource es = new ExplosionSource();
-		es.posX = 300;
-		es.posY = 300;
-		es.emitParticles();
-		
-		World.instance().addSource(es);
-		
+
 		try {
 			this.frame.setVisible(true);
 		} catch (Exception e) {
@@ -69,29 +68,34 @@ public class GUI implements Runnable {
 		panel.setBackground(Color.YELLOW);
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("Add source");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnAddSource = new JButton("Add source");
+		btnAddSource.addActionListener(this);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton_1 = new JButton("Add effect");
-		panel.add(btnNewButton_1);
+		btnAddEffect = new JButton("Add effect");
+		btnAddEffect.addActionListener(this);
+		panel.add(btnAddEffect);
 		
 		JLabel label = new JLabel("");
 		panel.add(label);
-		panel.add(btnNewButton);
+		panel.add(btnAddSource);
 		
-		JButton btnRunSimulation = new JButton("Run simulation");
+		btnRunSimulation = new JButton("Run simulation");
+		btnRunSimulation.addActionListener(this);
 		panel.add(btnRunSimulation);
 		
 		worldPanel = new WorldPanel();
 		worldPanel.setBackground(Color.BLUE);
 		frame.getContentPane().add(worldPanel, BorderLayout.CENTER);
+		Graphics g = worldPanel.getGraphics();
+		
+//		if (null == g)
+//			System.out.println("g is null");
+//		
+//		World.instance().setGraphics(g);
 	}
 
-	@Override
+	/*
 	public void run()
 	{
 		World.instance().paintWorld(this.getWorldPanel().getGraphics());
@@ -113,8 +117,47 @@ public class GUI implements Runnable {
 			}
 		}
 	}
+	*/
 	
-	public WorldPanel getWorldPanel() {
+	public JPanel getWorldPanel() {
 		return worldPanel;
+	}
+
+	public JButton getBtnAddEffect() {
+		return btnAddEffect;
+	}
+	public JButton getBtnAddSource() {
+		return btnAddSource;
+	}
+	
+	public void actionPerformed(ActionEvent arg) {
+		System.out.println("Action performed");
+		if(arg.getSource()==btnAddSource){
+			System.out.println("add source");
+			ExplosionSource es = new ExplosionSource();
+			es.posX = (int) (Math.random()*150+150);
+			es.posY = (int) (Math.random()*150+150);
+			es.emitParticles();
+			
+			World.instance().addSource(es);
+		}
+		else if(arg.getSource()==btnAddEffect){
+			//TODO
+			//add effect
+		}
+		else if(arg.getSource()==btnRunSimulation){
+			if(!simulationRunning){
+				simulationRunning = true;
+				World.instance().start();
+			}
+			else{
+				World.instance().stop();
+			}
+		}
+		
+	}
+
+	public JButton getBtnRunSimulation() {
+		return btnRunSimulation;
 	}
 }
