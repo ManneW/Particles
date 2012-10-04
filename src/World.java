@@ -1,12 +1,16 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.Vector;
 
-public class World {
+import javax.swing.JPanel;
+
+public class World extends Thread{
 
   public java.util.Vector<Particle> particles;
   public Vector<Source> sources;
 
   private static World instance;
+  private JPanel worldPanel;
   
   private World()
   {
@@ -52,5 +56,33 @@ public class World {
 		  particle.paint(g);
 	  }
   }
+  
+  public void run(){
+	  while(true){
+		  if(this.worldPanel.getGraphics()!=null){
+			  paintWorld(this.worldPanel.getGraphics());
+			  worldPanel.repaint();
+		  }
+		  else{
+			  System.out.println("graphics null");
+		  }
+		  
+		  try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  }
+  }
+
+public void setWorldPanel(JPanel worldPanel) {
+	this.worldPanel = worldPanel;
+}
+
+public JPanel getWorldPanel() {
+	return worldPanel;
+}
+
   
 }
