@@ -8,6 +8,7 @@ public class World extends Thread{
 
   public java.util.Vector<Particle> particles;
   public Vector<Source> sources;
+  public Vector<Effect> effects;
 
   private static World instance;
   private JPanel worldPanel;
@@ -16,6 +17,7 @@ public class World extends Thread{
   {
 	  this.particles = new Vector<Particle>();
 	  this.sources = new Vector<Source>();
+	  this.effects = new Vector<Effect>();
   }
   
   public static World instance()
@@ -37,9 +39,20 @@ public class World extends Thread{
 	  this.sources.add(s);
   }
   
+  public void addEffect(Effect e)
+  {
+	  this.effects.add(e);
+  }
+  
   public void recalculateParticle(Particle p)
   {
 	  //Apply force
+	  Force resultingForce = new Force();
+	  for (Effect effect : effects) {
+		  resultingForce.add(effect.forceAt(p.getPosX(), p.getPosY()));
+	  }
+	  
+	  p.applyForce(resultingForce);
 	  
 	  //Move
 	  p.move();
@@ -47,14 +60,27 @@ public class World extends Thread{
   
   public void paintWorld(Graphics g)
   {
-	  for (Source source : sources) {
-		  source.paint(g);
+	  synchronized (sources) {
+		  for (Source source : sources) {
+			  source.paint(g);
+		  }
 	  }
 	  
-	  for (Particle particle : particles) {
-		  this.recalculateParticle(particle);
-		  particle.paint(g);
+	  System.out.println("Particles: " + particles.size());
+	  
+	  Vector<Particle> exitedParticles = new Vector<Particle>();
+	  synchronized (particles) {
+		  for (Particle particle : particles) {
+			  this.recalculateParticle(particle);
+			  if (particle.getPosX() < 0 || particle.getPosX() > this.worldPanel.getWidth() ||
+				  particle.getPosY() < 0 || particle.getPosY() > this.worldPanel.getHeight()) {
+				  exitedParticles.add(particle);
+			  }
+			  particle.paint(g);
+		  }
+		  particles.removeAll(exitedParticles);
 	  }
+	  
   }
   
   public void run(){
@@ -68,7 +94,7 @@ public class World extends Thread{
 		  }
 		  
 		  try {
-			Thread.sleep(100);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

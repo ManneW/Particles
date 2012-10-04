@@ -144,6 +144,10 @@ public class GUI implements ActionListener {
 		else if(arg.getSource()==btnAddEffect){
 			//TODO
 			//add effect
+			GravityEffect ge = new GravityEffect();
+			ge.posX = 100;
+			ge.posY = 100;
+			World.instance().addEffect(ge);
 		}
 		else if(arg.getSource()==btnRunSimulation){
 			if(!simulationRunning){
