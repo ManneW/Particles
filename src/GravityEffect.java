@@ -5,7 +5,7 @@ public class GravityEffect extends Effect {
 		// TODO Auto-generated method stub
 		Force f = new Force();
 		f.x = 0;
-		f.y = 1;
+		f.y = 0.2;
 		
 		return f;
 	}

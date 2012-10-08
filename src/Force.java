@@ -1,9 +1,9 @@
 public class Force
 {
-	public float x = 0;
-  	public float y = 0;
+	public double x = 0;
+  	public double y = 0;
 
-  	public float resultingForce()
+  	public double resultingForce()
   	{
   		return x+y;
   	}
