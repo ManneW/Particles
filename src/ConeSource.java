@@ -8,51 +8,95 @@ public class ConeSource extends Source {
 
 	@Override
 	public void emitParticles() {
-		// TODO Auto-generated method stub
-		
+		Particle p;
+		for (int i = 0; i < (this.size + 25); i+=1) {
+			p = this.generateParticle();
+			World.instance().addParticle(p);
+		}
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.GREEN);
-		int[] dir = {this.posX, posY};
-		int[] pos = {this.directionX, this.directionY};
-		g.drawLine(posX, posY, directionY, directionY);
+		//g.drawLine(posX, posY, directionY, directionY);
 		
-		int pX = 0, pY = 0, p2X = 0, p2Y ;
+		int pX = 0, pY = 0, p2X = 0, p2Y = 0;
 		//			int p2Y = (int) (directionY - Math.sqrt((Math.pow((posX-directionX), 2) +Math.pow((posY-directionY), 2))*Math.sin((Math.PI/4-angle))));
+		switch (this.quadrant) {
+		case 1:
+			pX = posX + size;
+			pY = posY;
+			p2X = posX;
+			p2Y = posY+size;
+			break;
+		case 2:
+			pX = posX + size;
+			pY = posY;
+			p2X = posX;
+			p2Y = posY-size;
+			break;
+		case 3:
+			pX = posX - size;
+			pY = posY;
+			p2X = posX;
+			p2Y = posY-size;
+			break;
+		case 4:
+			pX = posX - size;
+			pY = posY;
+			p2X = posX;
+			p2Y = posY+size;
+			break;	
+		default:
+			break;
+		} 
 		
-		/*
-		if((directionX-posX)>0 && (directionY-posY)>0){
-			pX = 
-			p2X = directionX;
-			p2Y = posY;
-		}
-		else if((directionX-posX)>0 && (directionY-posY)<0){
-			p2X = directionX;
-			p2Y = -posY;
-		}
-		else if((directionX-posX)<0 && (directionY-posY)>0){
-			p2X = -directionX;
-			p2Y = posY;
-		}
-		else{
-			p2X = -directionX;
-			p2Y = -posY;
-		}
-		*/
-		
-		
-		g.setColor(Color.ORANGE);
 		g.drawLine(posX, posY, pX, pY);
 		g.drawLine(posX, posY, p2X, p2Y);
 		
 	}
 
-	public ConeSource() {
-		super();
-		// TODO Auto-generated constructor stub
+	private Particle generateParticle()
+	{
+		Force f = this.randomizeForce();
+		while (f.resultingForce() == 0) {
+			f = this.randomizeForce();
+		}
 		
+		Particle p = new Particle();
+		p.setPosX(this.posX);
+		p.setPosY(this.posY);
+		p.applyForce(f);
+		
+		return p;
+	}
+	
+	private Force randomizeForce()
+	{
+		Force f = new Force();
+		switch (this.quadrant) {
+		case 1:
+			f.x = (float)((Math.random() * 10.0));
+			f.y = (float)((Math.random() * 10.0));
+			break;
+		case 2:
+			f.x = (float)((Math.random() * 10.0));
+			f.y = (float)((Math.random() * -10.0));
+			break;
+		case 3:
+			f.x = (float)((Math.random() * -10.0));
+			f.y = (float)((Math.random() * -10.0));
+			break;
+		case 4:
+			f.x = (float)((Math.random() * -10.0));
+			f.y = (float)((Math.random() * 10.0));
+			break;	
+		default:
+			break;
+		}
+		
+		
+		return f;
 	}
 	
 	
