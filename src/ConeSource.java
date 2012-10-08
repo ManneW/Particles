@@ -18,10 +18,8 @@ public class ConeSource extends Source {
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.GREEN);
-		//g.drawLine(posX, posY, directionY, directionY);
 		
 		int pX = 0, pY = 0, p2X = 0, p2Y = 0;
-		//			int p2Y = (int) (directionY - Math.sqrt((Math.pow((posX-directionX), 2) +Math.pow((posY-directionY), 2))*Math.sin((Math.PI/4-angle))));
 		switch (this.quadrant) {
 		case 1:
 			pX = posX + size;
@@ -47,8 +45,6 @@ public class ConeSource extends Source {
 			p2X = posX;
 			p2Y = posY+size;
 			break;	
-		default:
-			break;
 		} 
 		
 		g.drawLine(posX, posY, pX, pY);

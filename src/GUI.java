@@ -145,8 +145,8 @@ public class GUI implements ActionListener {
 		if(arg.getSource()==btnAddSource){
 			System.out.println("add source");
 			ExplosionSource es = new ExplosionSource();
-			es.posX = (int) (Math.random()*150+150);
-			es.posY = (int) (Math.random()*150+150);
+			es.posX = (int) (Math.random()*this.worldPanel.getWidth());
+			es.posY = (int) (Math.random()*this.worldPanel.getHeight());
 			es.size = (int) (Math.random()*25);
 			es.emitParticles();
 			
@@ -156,25 +156,35 @@ public class GUI implements ActionListener {
 		else if(arg.getSource()==btnAddConeSource){
 			System.out.println("add source");
 			ConeSource cs = new ConeSource();
-			cs.posX = (int) (Math.random()*150+150);
-			cs.posY = (int) (Math.random()*150+150);
+			cs.posX = (int) (Math.random()*this.worldPanel.getWidth());
+			cs.posY = (int) (Math.random()*this.worldPanel.getHeight());
 			cs.directionX = (int) (cs.posX-75+(Math.random()*150));
 			cs.directionY = (int) (cs.posY-75+(Math.random()*150));
 			cs.quadrant = (int) Math.round((Math.random()*3)+1);
-			cs.size = (int) (Math.random()*25);
+			cs.size = (int) (Math.random()*45);
 			cs.emitParticles();
 			
 			World.instance().addSource(cs);
 			World.instance().sources.get(World.instance().sources.size()-1).paint(worldPanel.getGraphics());
 		}
-		else if(arg.getSource()==btnAddGravity){
-			//TODO
-			//add effect
-		}
-		else if(arg.getSource()==btnAddWind){
+		else if(arg.getSource()==btnAddGravity)
+		{
+			GravityEffect ge = new GravityEffect();
+			ge.posX = this.worldPanel.getWidth();
+			ge.posY = this.worldPanel.getHeight();
 			
+			World.instance().addEffect(ge);
 		}
-		else if(arg.getSource()==btnRunSimulation){
+		else if(arg.getSource()==btnAddWind)
+		{
+			WindEffect we = new WindEffect();
+			we.posX = (int)(Math.random()*this.worldPanel.getWidth());
+			we.posY = (int)(Math.random()*this.worldPanel.getHeight());
+			
+			World.instance().addEffect(we);
+		}
+		else if(arg.getSource()==btnRunSimulation)
+		{
 			if(!simulationRunning){
 				//TODO
 				//check if thread has started
