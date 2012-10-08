@@ -9,8 +9,8 @@ public class WindEffect extends Effect {
 		Point p2 = new Point(posX, posY);
 		double distance = p1.distance(p2);
 		
-		double fanReach = 2000;
-		double fanForce = 1;
+		double fanReach = 200;
+		double fanForce = 0.5;
 		double force;
 		if (distance > fanReach) {
 			force = 0;

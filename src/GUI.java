@@ -135,8 +135,8 @@ public class GUI implements ActionListener {
 		if(arg.getSource()==btnAddSource){
 			System.out.println("add source");
 			ExplosionSource es = new ExplosionSource();
-			es.posX = (int) (Math.random()*150+150);
-			es.posY = (int) (Math.random()*150+150);
+			es.posX = (int) (Math.random()*this.worldPanel.getWidth());
+			es.posY = (int) (Math.random()*this.worldPanel.getHeight());
 			es.emitParticles();
 			
 			World.instance().addSource(es);
@@ -147,12 +147,12 @@ public class GUI implements ActionListener {
 			GravityEffect ge = new GravityEffect();
 			ge.posX = 100;
 			ge.posY = 100;
-			World.instance().addEffect(ge);
+			//World.instance().addEffect(ge);
 			
 			WindEffect we = new WindEffect();
-			we.posX = this.worldPanel.getWidth()-100;
-			we.posY = this.worldPanel.getHeight()-100;
-			//World.instance().addEffect(we);
+			we.posX = this.worldPanel.getWidth()-500;
+			we.posY = this.worldPanel.getHeight()-500;
+			World.instance().addEffect(we);
 		}
 		else if(arg.getSource()==btnRunSimulation){
 			if(!simulationRunning){

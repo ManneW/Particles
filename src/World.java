@@ -48,10 +48,11 @@ public class World extends Thread{
   {
 	  //Apply force
 	  Force resultingForce = new Force();
-	  for (Effect effect : effects) {
-		  resultingForce.add(effect.forceAt(p.getRoundedPosX(), p.getRoundedPosY()));
+	  synchronized (effects) {
+		  for (Effect effect : effects) {
+			  resultingForce.add(effect.forceAt(p.getRoundedPosX(), p.getRoundedPosY()));
+		  }		
 	  }
-	  
 	  p.applyForce(resultingForce);
 	  
 	  //Move
@@ -60,9 +61,24 @@ public class World extends Thread{
   
   public void paintWorld(Graphics g)
   {
+	  int particleCount;
+	  int maxParticles = 500;
+	  synchronized (particles) {
+		  particleCount = particles.size();
+	  }
+	  
 	  synchronized (sources) {
 		  for (Source source : sources) {
+			  if (particleCount < maxParticles) {
+				  source.emitParticles();
+			  }
 			  source.paint(g);
+		  }
+	  }
+	  
+	  synchronized (effects) {
+		  for (Effect effect : effects) {
+			  effect.paint(g);
 		  }
 	  }
 	  
@@ -94,7 +110,7 @@ public class World extends Thread{
 		  }
 		  
 		  try {
-			Thread.sleep(200);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

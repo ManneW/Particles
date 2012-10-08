@@ -70,7 +70,7 @@ public class Particle {
   	public void paint(Graphics g)
   	{
   		g.setColor(Color.RED);
-  		g.fillOval((int)Math.round(this.getPosX()), (int)Math.round(this.getPosY()), 10, 10);
+  		g.fillOval((int)Math.round(this.getPosX()), (int)Math.round(this.getPosY()), 3, 3);
   	}
   	
   	public void move()
