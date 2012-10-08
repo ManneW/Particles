@@ -1,10 +1,18 @@
 public class Force
 {
-	public float x;
-  	public float y;
+	public double x = 0;
+  	public double y = 0;
 
-  	public float resultingForce()
+  	public double resultingForce()
   	{
   		return x+y;
+  	}
+  	
+  	public Force add(Force f)
+  	{
+  		this.x += f.x;
+  		this.y += f.y;
+  		
+  		return this;
   	}
 }
