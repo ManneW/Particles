@@ -13,6 +13,8 @@ public class World extends Thread{
   private static World instance;
   private JPanel worldPanel;
   
+  public boolean simulationRunning = false;
+  
   private World()
   {
 	  this.particles = new Vector<Particle>();
@@ -62,7 +64,7 @@ public class World extends Thread{
   public void paintWorld(Graphics g)
   {
 	  int particleCount;
-	  int maxParticles = 500;
+	  int maxParticles = 800;
 	  synchronized (particles) {
 		  particleCount = particles.size();
 	  }
@@ -101,20 +103,22 @@ public class World extends Thread{
   
   public void run(){
 	  while(true){
-		  if(this.worldPanel.getGraphics()!=null){
-			  paintWorld(this.worldPanel.getGraphics());
-			  worldPanel.repaint();
-		  }
-		  else{
-			  System.out.println("graphics null");
+		  if(simulationRunning) {
+				if (this.worldPanel.getGraphics() != null) {
+					paintWorld(this.worldPanel.getGraphics());
+					worldPanel.repaint();
+				} else {
+					System.out.println("graphics null");
+				}
 		  }
 		  
-		  try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  
 	  }
   }
 

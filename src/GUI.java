@@ -20,7 +20,7 @@ public class GUI implements ActionListener {
 	private JButton btnAddGravity;
 	private JButton btnAddSource;
 	private JButton btnRunSimulation;
-	private boolean simulationRunning = false;
+	private boolean simulationStarted = false;
 	private JButton btnAddConeSource;
 	private JButton btnAddWind;
 	
@@ -95,7 +95,7 @@ public class GUI implements ActionListener {
 		panel.add(btnRunSimulation);
 		
 		worldPanel = new WorldPanel();
-		worldPanel.setBackground(Color.BLUE);
+		worldPanel.setBackground(Color.BLACK);
 		frame.getContentPane().add(worldPanel, BorderLayout.CENTER);
 		Graphics g = worldPanel.getGraphics();
 		
@@ -182,27 +182,25 @@ public class GUI implements ActionListener {
 			we.posY = (int)(Math.random()*this.worldPanel.getHeight());
 			
 			World.instance().addEffect(we);
+			World.instance().effects.get(World.instance().effects.size()-1).paint(worldPanel.getGraphics());
 		}
 		else if(arg.getSource()==btnRunSimulation)
 		{
-			if(!simulationRunning){
-				//TODO
-				//check if thread has started
-				if(false){
-					simulationRunning = true;
-					World.instance().resume();
-				}
-				else{
-					simulationRunning = true;
-					World.instance().start();					
-				}
+			if(!simulationStarted) {
+				World.instance().start();
+				World.instance().simulationRunning = true;
+				simulationStarted = true;
+			} else {
+				World.instance().simulationRunning = !World.instance().simulationRunning;
 			}
-			else{
-				simulationRunning = false;
-				World.instance().stop();
+			
+			
+			if(World.instance().simulationRunning) {
+				btnRunSimulation.setText("Pause simulation");
+			} else {
+				btnRunSimulation.setText("Start simulation");
 			}
 		}
-		
 	}
 
 	public JButton getBtnRunSimulation() {
