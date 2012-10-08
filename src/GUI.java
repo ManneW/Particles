@@ -21,6 +21,7 @@ public class GUI implements ActionListener {
 	private JButton btnAddSource;
 	private JButton btnRunSimulation;
 	private boolean simulationRunning = false;
+	private JButton btnAddConeSource;
 	
 
 	/**
@@ -68,12 +69,16 @@ public class GUI implements ActionListener {
 		panel.setBackground(Color.YELLOW);
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		
-		btnAddSource = new JButton("Add source");
+		btnAddSource = new JButton("Add Explosion source");
 		btnAddSource.addActionListener(this);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		btnAddEffect = new JButton("Add effect");
 		btnAddEffect.addActionListener(this);
+		
+		btnAddConeSource = new JButton("Add Cone Source");
+		btnAddConeSource.addActionListener(this);
+		panel.add(btnAddConeSource);
 		panel.add(btnAddEffect);
 		
 		JLabel label = new JLabel("");
@@ -137,9 +142,25 @@ public class GUI implements ActionListener {
 			ExplosionSource es = new ExplosionSource();
 			es.posX = (int) (Math.random()*150+150);
 			es.posY = (int) (Math.random()*150+150);
+			es.size = (int) (Math.random()*25);
 			es.emitParticles();
 			
 			World.instance().addSource(es);
+			World.instance().sources.get(World.instance().sources.size()-1).paint(worldPanel.getGraphics());
+		}
+		else if(arg.getSource()==btnAddConeSource){
+			System.out.println("add source");
+			ConeSource cs = new ConeSource();
+			cs.posX = (int) (Math.random()*150+150);
+			cs.posY = (int) (Math.random()*150+150);
+			cs.directionX = (int) (cs.posX-75+(Math.random()*150));
+			cs.directionY = (int) (cs.posY-75+(Math.random()*150));
+			cs.quadrant = (int) Math.round((Math.random()*3)+1);
+			cs.size = (int) (Math.random()*25);
+			cs.emitParticles();
+			
+			World.instance().addSource(cs);
+			World.instance().sources.get(World.instance().sources.size()-1).paint(worldPanel.getGraphics());
 		}
 		else if(arg.getSource()==btnAddEffect){
 			//TODO
@@ -147,10 +168,19 @@ public class GUI implements ActionListener {
 		}
 		else if(arg.getSource()==btnRunSimulation){
 			if(!simulationRunning){
-				simulationRunning = true;
-				World.instance().start();
+				//TODO
+				//check if thread has started
+				if(false){
+					simulationRunning = true;
+					World.instance().resume();
+				}
+				else{
+					simulationRunning = true;
+					World.instance().start();					
+				}
 			}
 			else{
+				simulationRunning = false;
 				World.instance().stop();
 			}
 		}
@@ -159,5 +189,8 @@ public class GUI implements ActionListener {
 
 	public JButton getBtnRunSimulation() {
 		return btnRunSimulation;
+	}
+	public JButton getBtnAddConeSource() {
+		return btnAddConeSource;
 	}
 }
