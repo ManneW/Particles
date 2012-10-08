@@ -17,11 +17,12 @@ public class GUI implements ActionListener {
 
 	private JFrame frame;
 	private JPanel worldPanel;
-	private JButton btnAddEffect;
+	private JButton btnAddGravity;
 	private JButton btnAddSource;
 	private JButton btnRunSimulation;
 	private boolean simulationRunning = false;
 	private JButton btnAddConeSource;
+	private JButton btnAddWind;
 	
 
 	/**
@@ -68,25 +69,29 @@ public class GUI implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.YELLOW);
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
-		
-		btnAddSource = new JButton("Add Explosion source");
-		btnAddSource.addActionListener(this);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnAddEffect = new JButton("Add effect");
-		btnAddEffect.addActionListener(this);
+		btnAddGravity = new JButton("Add gravity");
+		btnAddGravity.addActionListener(this);
 		
 		btnAddConeSource = new JButton("Add Cone Source");
 		btnAddConeSource.addActionListener(this);
 		panel.add(btnAddConeSource);
-		panel.add(btnAddEffect);
+		
+		btnAddSource = new JButton("Add Explosion source");
+		btnAddSource.addActionListener(this);
+		panel.add(btnAddSource);
+		panel.add(btnAddGravity);
 		
 		JLabel label = new JLabel("");
 		panel.add(label);
-		panel.add(btnAddSource);
 		
 		btnRunSimulation = new JButton("Run simulation");
 		btnRunSimulation.addActionListener(this);
+		
+		btnAddWind = new JButton("Add wind");
+		btnAddWind.addActionListener(this);
+		panel.add(btnAddWind);
 		panel.add(btnRunSimulation);
 		
 		worldPanel = new WorldPanel();
@@ -129,7 +134,7 @@ public class GUI implements ActionListener {
 	}
 
 	public JButton getBtnAddEffect() {
-		return btnAddEffect;
+		return btnAddGravity;
 	}
 	public JButton getBtnAddSource() {
 		return btnAddSource;
@@ -162,9 +167,12 @@ public class GUI implements ActionListener {
 			World.instance().addSource(cs);
 			World.instance().sources.get(World.instance().sources.size()-1).paint(worldPanel.getGraphics());
 		}
-		else if(arg.getSource()==btnAddEffect){
+		else if(arg.getSource()==btnAddGravity){
 			//TODO
 			//add effect
+		}
+		else if(arg.getSource()==btnAddWind){
+			
 		}
 		else if(arg.getSource()==btnRunSimulation){
 			if(!simulationRunning){
@@ -192,5 +200,8 @@ public class GUI implements ActionListener {
 	}
 	public JButton getBtnAddConeSource() {
 		return btnAddConeSource;
+	}
+	public JButton getBtnAddWind() {
+		return btnAddWind;
 	}
 }
