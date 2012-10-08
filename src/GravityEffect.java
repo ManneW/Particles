@@ -12,4 +12,10 @@ public class GravityEffect extends Effect {
 		
 		return f;
 	}
+	
+	@Override
+	public void paint(Graphics g) {
+		//Don't draw the gravity
+		return;
+	}
 }
