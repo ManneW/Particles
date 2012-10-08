@@ -118,13 +118,13 @@ public class World extends Thread{
 	  }
   }
 
-public void setWorldPanel(JPanel worldPanel) {
-	this.worldPanel = worldPanel;
-}
-
-public JPanel getWorldPanel() {
-	return worldPanel;
-}
+	public void setWorldPanel(JPanel worldPanel) {
+		this.worldPanel = worldPanel;
+	}
+	
+	public JPanel getWorldPanel() {
+		return worldPanel;
+	}
 
   
 }
